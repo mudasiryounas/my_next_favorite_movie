@@ -1,5 +1,6 @@
 from io import StringIO
 import json
+import random
 
 import requests
 import pandas
@@ -31,12 +32,12 @@ PAST_FAVORITE_MOVIES = [
 
 def convert_to_csv(movies_data):
     print("Converting movies details to csv started")
-    csv_data = 'Title,Genre,Production\n'
+    csv_data = 'Title,Genre,Production,Rating\n'
     for item in movies_data:
         title = item['Title'].strip().replace(',', '')
         genre = item['Genre'].strip().replace(',', '|')
         production = item['Production'].strip().replace(',', '|')
-        csv_data += f"{title},{genre},{production}\n"
+        csv_data += f"{title},{genre},{production}, {random.randint(7, 10)}\n"
     print("Converting movies details to csv finished")
     return csv_data
 
@@ -57,14 +58,17 @@ def collect_movies_details(movies):
 
 
 def main():
-    #movies_data = collect_movies_details(PAST_FAVORITE_MOVIES)
-    #csv_data = convert_to_csv(movies_data)
-    #data_set = pandas.read_csv(StringIO(csv_data))
+    # movies_data = collect_movies_details(PAST_FAVORITE_MOVIES)
+    # csv_data = convert_to_csv(movies_data)
+    # print(csv_data)
+    # data_set = pandas.read_csv(StringIO(csv_data))
     data_set = pandas.read_csv('my_movies_list.csv')
 
 
 
-    print(data_set)
+
+
+
 
 
 if __name__ == '__main__':

@@ -1,22 +1,22 @@
-Title,Genre,Production
-WALL·E,Animation| Adventure| Family| Sci-Fi,Walt Disney Pictures
-Finding Nemo,Animation| Adventure| Comedy| Family,Walt Disney Pictures
-Despicable Me,Animation| Comedy| Family| Fantasy,Universal Pictures
-Ice Age,Animation| Adventure| Comedy| Family| Fantasy,20th Century Fox
-Zootopia,Animation| Adventure| Comedy| Crime| Family| Mystery,Walt Disney Animation Studios
-Kung Fu Panda,Animation| Action| Adventure| Comedy| Family,Paramount Pictures
-Big Hero 6,Animation| Action| Adventure| Family| Sci-Fi,Walt Disney Pictures
-Despicable Me 2,Animation| Adventure| Comedy| Family| Fantasy| Sci-Fi,Universal Pictures
-Wreck-It Ralph,Animation| Adventure| Comedy| Family| Fantasy,Walt Disney Pictures
-Madagascar,Animation| Adventure| Comedy| Family,Dreamworks
-Coco,Animation| Adventure| Family| Fantasy| Music| Mystery,Disney/Pixar
-Rango,Animation| Adventure| Comedy| Family| Western,Paramount Pictures
-Finding Dory,Animation| Adventure| Comedy| Family,Walt Disney Pictures/PIXAR
-Megamind,Animation| Action| Comedy| Family| Sci-Fi,Paramount Studios/DWA
-Hotel Transylvania,Animation| Comedy| Family| Fantasy| Horror,Sony Pictures
-The Croods,Animation| Action| Adventure| Comedy| Family| Fantasy,20th Century Fox
-Puss in Boots,Animation| Action| Adventure| Comedy| Family| Fantasy,Paramount/Dreamworks
-9,Animation| Action| Adventure| Sci-Fi,Focus Features
-Robots,Animation| Adventure| Comedy| Family| Sci-Fi,20th Century Fox
-Kubo and the Two Strings,Animation| Action| Adventure| Family| Fantasy,Focus Features
-The Boss Baby,Animation| Adventure| Comedy| Family| Fantasy,DreamWorks Animation
+Title,Genre,Production,Rating
+WALL·E,Animation| Adventure| Family| Sci-Fi,Walt Disney Pictures, 9
+Finding Nemo,Animation| Adventure| Comedy| Family,Walt Disney Pictures, 10
+Despicable Me,Animation| Comedy| Family| Fantasy,Universal Pictures, 7
+Ice Age,Animation| Adventure| Comedy| Family| Fantasy,20th Century Fox, 10
+Zootopia,Animation| Adventure| Comedy| Crime| Family| Mystery,Walt Disney Animation Studios, 9
+Kung Fu Panda,Animation| Action| Adventure| Comedy| Family,Paramount Pictures, 10
+Big Hero 6,Animation| Action| Adventure| Family| Sci-Fi,Walt Disney Pictures, 9
+Despicable Me 2,Animation| Adventure| Comedy| Family| Fantasy| Sci-Fi,Universal Pictures, 7
+Wreck-It Ralph,Animation| Adventure| Comedy| Family| Fantasy,Walt Disney Pictures, 8
+Madagascar,Animation| Adventure| Comedy| Family,Dreamworks, 9
+Coco,Animation| Adventure| Family| Fantasy| Music| Mystery,Disney/Pixar, 10
+Rango,Animation| Adventure| Comedy| Family| Western,Paramount Pictures, 10
+Finding Dory,Animation| Adventure| Comedy| Family,Walt Disney Pictures/PIXAR, 9
+Megamind,Animation| Action| Comedy| Family| Sci-Fi,Paramount Studios/DWA, 10
+Hotel Transylvania,Animation| Comedy| Family| Fantasy| Horror,Sony Pictures, 7
+The Croods,Animation| Action| Adventure| Comedy| Family| Fantasy,20th Century Fox, 7
+Puss in Boots,Animation| Action| Adventure| Comedy| Family| Fantasy,Paramount/Dreamworks, 9
+9,Animation| Action| Adventure| Sci-Fi,Focus Features, 9
+Robots,Animation| Adventure| Comedy| Family| Sci-Fi,20th Century Fox, 9
+Kubo and the Two Strings,Animation| Action| Adventure| Family| Fantasy,Focus Features, 7
+The Boss Baby,Animation| Adventure| Comedy| Family| Fantasy,DreamWorks Animation, 10
