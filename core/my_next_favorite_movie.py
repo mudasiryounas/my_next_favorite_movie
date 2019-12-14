@@ -1,9 +1,13 @@
-from io import StringIO
 import json
 import random
 
-import requests
 import pandas
+import numpy as np
+import requests
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
 
 PAST_FAVORITE_MOVIES = [
     'tt0910970',
@@ -64,11 +68,39 @@ def main():
     # data_set = pandas.read_csv(StringIO(csv_data))
     data_set = pandas.read_csv('my_movies_list.csv')
 
+    # handling a feature containing multiple values in our case genre
+    # set_index: Sets the index to which the functions relate.
+    data_frame = data_set.set_index('Title').Genre.str.split('|', expand=True)
+    data_frame_columns_length = data_frame.shape[1]
+    for i in range(data_frame_columns_length):
+        data_frame[i] = data_frame[i].str.strip()
+    cleaned = data_frame.stack()
+    genre_dummied = pandas.get_dummies(cleaned, prefix='g').groupby(level=0).sum()
 
 
 
 
+    X = data_set.iloc[:, 1:-1].values
+    y = data_set.iloc[:, 3].values
+    # encoding categorical data (dummy variables)
 
+
+
+    label_encoder_X = LabelEncoder()
+    X[:, 1] = label_encoder_X.fit_transform(X[:, 1])
+
+    ct = ColumnTransformer(
+        [('Production', OneHotEncoder(sparse=False), [1])],  # The column numbers to be transformed (here is [0] but can be [0, 1, 3])
+        remainder='passthrough'  # Leave the rest of the columns untouched
+    )
+
+    X = np.array(ct.fit_transform(X), dtype=np.float)
+
+
+    # splitting into training and testing data sets
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+    print("Completed")
 
 
 if __name__ == '__main__':
