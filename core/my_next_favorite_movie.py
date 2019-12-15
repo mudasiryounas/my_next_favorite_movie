@@ -1,13 +1,13 @@
 import json
 import random
 
-import pandas
 import numpy as np
+import pandas
 import requests
+from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
-from sklearn.compose import ColumnTransformer
 
 PAST_FAVORITE_MOVIES = [
     'tt0910970',
@@ -36,7 +36,7 @@ PAST_FAVORITE_MOVIES = [
 
 def convert_to_csv(movies_data):
     print("Converting movies details to csv started")
-    csv_data = 'Title,Genre,Production,Rating\n'
+    csv_data = 'title,genre,production,rating\n'
     for item in movies_data:
         title = item['Title'].strip().replace(',', '')
         genre = item['Genre'].strip().replace(',', '|')
@@ -61,30 +61,44 @@ def collect_movies_details(movies):
     return movies_data
 
 
+def manage_multi_valued_dummy_variables(dataset, column, prefix):
+    all_column_values = {item.strip() for item in dataset[column].tolist()}
+    for item in all_column_values:
+        dataset[f"{prefix}_{item}"] = dataset.production.map({item: 1})
+    # avoiding dummy variable trap
+    return dataset.drop(columns=column).fillna(0)
+
+
 def main():
     # movies_data = collect_movies_details(PAST_FAVORITE_MOVIES)
     # csv_data = convert_to_csv(movies_data)
     # print(csv_data)
     # data_set = pandas.read_csv(StringIO(csv_data))
-    data_set = pandas.read_csv('my_movies_list.csv')
+    dataset = pandas.read_csv('my_movies_list.csv')
 
-    # handling a feature containing multiple values in our case genre
+    # dealing with production dummy variable
+    # production is a single valued variable (which means production can either be disney, WB or dreamworks etc).
+    # so we will remove one dummy variable in order to avoid dummy trap for production, hence at the end we will be
+    # having (n-1) dummy variables for production
+    dataset = pandas.get_dummies(dataset, columns=['production'], prefix='p', drop_first=True)
+
+    # dealing with genre dummy variables
     # set_index: Sets the index to which the functions relate.
-    data_frame = data_set.set_index('Title').Genre.str.split('|', expand=True)
+    data_frame = dataset.set_index('title').genre.str.split('|', expand=True)
     data_frame_columns_length = data_frame.shape[1]
     for i in range(data_frame_columns_length):
         data_frame[i] = data_frame[i].str.strip()
-    cleaned = data_frame.stack()
-    genre_dummied = pandas.get_dummies(cleaned, prefix='g').groupby(level=0).sum()
+    cleaned_dataset = data_frame.stack()
+    genre_dummy_dataset = pandas.get_dummies(cleaned_dataset, prefix='g').groupby(level=0).sum()
+    # merge genre dummy dataset with main dataset
+    dataset = dataset.drop(columns=['genre'])
+    dataset = pandas.concat([dataset.set_index('title'), genre_dummy_dataset], axis=1)
 
 
 
-
-    X = data_set.iloc[:, 1:-1].values
-    y = data_set.iloc[:, 3].values
+    X = dataset.iloc[:, 1:-1].values
+    y = dataset.iloc[:, 3].values
     # encoding categorical data (dummy variables)
-
-
 
     label_encoder_X = LabelEncoder()
     X[:, 1] = label_encoder_X.fit_transform(X[:, 1])
@@ -95,7 +109,6 @@ def main():
     )
 
     X = np.array(ct.fit_transform(X), dtype=np.float)
-
 
     # splitting into training and testing data sets
 
