@@ -61,13 +61,6 @@ def collect_movies_details(movies):
     return movies_data
 
 
-def manage_multi_valued_dummy_variables(dataset, column, prefix):
-    all_column_values = {item.strip() for item in dataset[column].tolist()}
-    for item in all_column_values:
-        dataset[f"{prefix}_{item}"] = dataset.production.map({item: 1})
-    # avoiding dummy variable trap
-    return dataset.drop(columns=column).fillna(0)
-
 
 def main():
     # movies_data = collect_movies_details(PAST_FAVORITE_MOVIES)
@@ -92,26 +85,18 @@ def main():
     genre_dummy_dataset = pandas.get_dummies(cleaned_dataset, prefix='g').groupby(level=0).sum()
     # merge genre dummy dataset with main dataset
     dataset = dataset.drop(columns=['genre'])
-    dataset = pandas.concat([dataset.set_index('title'), genre_dummy_dataset], axis=1)
+    dataset = pandas.concat([dataset.set_index('title'), genre_dummy_dataset], axis=1, sort=True)
 
+    X = dataset.iloc[:, 1:].values
+    y = dataset.iloc[:, 0].values
 
-
-    X = dataset.iloc[:, 1:-1].values
-    y = dataset.iloc[:, 3].values
-    # encoding categorical data (dummy variables)
-
-    label_encoder_X = LabelEncoder()
-    X[:, 1] = label_encoder_X.fit_transform(X[:, 1])
-
-    ct = ColumnTransformer(
-        [('Production', OneHotEncoder(sparse=False), [1])],  # The column numbers to be transformed (here is [0] but can be [0, 1, 3])
-        remainder='passthrough'  # Leave the rest of the columns untouched
-    )
-
-    X = np.array(ct.fit_transform(X), dtype=np.float)
+    # make sure data is split correctly
+    if (len(dataset.columns) - 1) == X.shape[1]:
+        print("Data is split correctly")
+    else:
+        raise Exception("Data is not split correctly")
 
     # splitting into training and testing data sets
-
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
     print("Completed")
 
